@@ -119,6 +119,7 @@ public class HashBrown {
 
 		if (numOfElements == 0) {
 			System.err.println("Table empty.. No items to lookup!");
+			return;
 		}
 
 		int asciiSum = sumChars(item);			
