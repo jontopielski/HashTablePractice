@@ -42,26 +42,30 @@ public class HashBrown {
 
 		if (numOfElements == tableSize) {
 			System.err.println("Table is full.. Cannot add any items!");
+			return;
 		}
 
-		else {
-			asciiSum = sumChars(item);
-			asciiSum %= tableSize;
+		asciiSum = sumChars(item);
+		asciiSum %= tableSize;
 
-			while (true) {
+		while (true) {
 
-				if (theArray[asciiSum] == "") {
-					theArray[asciiSum] = item;
-					System.out.println("Inserting " + item + " at position " + asciiSum + "!");
-					numOfElements++;
-					break;
-				}
+			if (theArray[asciiSum] == "") {
+				theArray[asciiSum] = item;
+				System.out.println("Inserting " + item + " at position " + asciiSum + "!");
+				numOfElements++;
+				break;
+			}
 
-				asciiSum++; // keep incrementing by 1 until we find a spot
+			if (theArray[asciiSum].equals(item)) { // duplicate found
+				System.out.println("Overriding duplicate item!");
+				break;
+			}
 
-				if (asciiSum == tableSize) { // reach end of table
-					asciiSum = 0;
-				}
+			asciiSum++; // keep incrementing by 1 until we find a spot
+
+			if (asciiSum == tableSize) { // reach end of table
+				asciiSum = 0;
 			}
 		}
 	}
@@ -76,34 +80,33 @@ public class HashBrown {
 
 		if (numOfElements == 0) {
 			System.err.println("Cannot delete from an empty table!");
+			return;
 		}
 
-		else {
-			int asciiSum = sumChars(item);
-			asciiSum %= tableSize; // ensure bucket is within table range
+		int asciiSum = sumChars(item);
+		asciiSum %= tableSize; // ensure bucket is within table range
 
-			while (iterations < tableSize) {
+		while (iterations < tableSize) {
 
-				if (theArray[asciiSum].equals(item)) {
-					theArray[asciiSum] = "";
-					System.out.println("Deleting " + item + " at position " + asciiSum + "!");
-					numOfElements--;
-					break;
-				}
-
-				asciiSum++; // keep incrementing by 1 until we find the item
-
-				if (asciiSum == tableSize) { // reach end of table
-					asciiSum = 0;
-				}
-
-				iterations++;
+			if (theArray[asciiSum].equals(item)) {
+				theArray[asciiSum] = "";
+				System.out.println("Deleting " + item + " at position " + asciiSum + "!");
+				numOfElements--;					
+				break;
 			}
 
-			if (iterations >= tableSize) {
-				System.out.println(item + " not found in table!");
+			asciiSum++; // keep incrementing by 1 until we find the item
+
+			if (asciiSum == tableSize) { // reach end of table
+				asciiSum = 0;
 			}
+
+			iterations++;
 		}
+
+		if (iterations >= tableSize) {
+			System.out.println(item + " not found in table!");
+		}			
 	}
 
 	/* Looks an item up in the Hash Table */
@@ -118,29 +121,27 @@ public class HashBrown {
 			System.err.println("Table empty.. No items to lookup!");
 		}
 
-		else {
-			int asciiSum = sumChars(item);
-			asciiSum %= tableSize; // ensure bucket is within table range
+		int asciiSum = sumChars(item);			
+		asciiSum %= tableSize; // ensure bucket is within table range
 
-			while (iterations < tableSize) {
+		while (iterations < tableSize) {
 
-				if (theArray[asciiSum].equals(item)) {
-					System.out.println("Found " + item + " at position " + asciiSum + "!");
-					break;
-				}
-
-				asciiSum++; // keep incrementing by 1 until we find the item
-
-				if (asciiSum == tableSize) { // reach end of table
-					asciiSum = 0;
-				}
-
-				iterations++;
+			if (theArray[asciiSum].equals(item)) {
+				System.out.println("Found " + item + " at position " + asciiSum + "!");
+				break;
 			}
 
-			if (iterations >= tableSize) {
-				System.out.println(item + " not found in table!");
+			asciiSum++; // keep incrementing by 1 until we find the item
+
+			if (asciiSum == tableSize) { // reach end of table
+				asciiSum = 0;
 			}
+
+			iterations++;
+		}
+
+		if (iterations >= tableSize) {
+			System.out.println(item + " not found in table!");
 		}
 	}
 
